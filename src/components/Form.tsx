@@ -1,19 +1,25 @@
 import { useState,useEffect } from "react";
 import { FunctionComponent } from 'react';
-import { Users } from "./Table";
+
 
 import "./Form.css";
 
 const team=["blue","yellow","red"] as const
+
+export const teamUnions=()=>{
+    return team
+}
 
 export type Team=typeof team[number]
 
 export type User={
     name:string
     team:Team
+    score:number
+
 }
 
-const Form: FunctionComponent<Users>  = ({users}) => {
+const Form= ({users,setter}:{users:User[],setter:React.Dispatch<React.SetStateAction<User[]>>}) => {
     const[inputTextValue,setInputtextValue]=useState("")
     const[optionValue,setOptionValue]=useState<Team>(team[0])
     const[btnEnable,setBtnEnable]=useState(true)
@@ -30,16 +36,23 @@ const Form: FunctionComponent<Users>  = ({users}) => {
 
     },[inputTextValue])
 
+   
+
 
     const btnAction=()=>{
 
         const u: User={
             name:inputTextValue,
-            team:optionValue
+            team:optionValue,
+            score:0,
+            
         }
 
-        users.push(u)
+
+        setter([...users, u])
+
         console.log(users)
+        setInputtextValue("")
     }
 
 
@@ -50,7 +63,7 @@ const Form: FunctionComponent<Users>  = ({users}) => {
     <div className="mainBox">
       <div className="miniBox">
         <h5>Player name</h5>
-        <input onChange={(e)=>setInputtextValue(p=>e.target.value)}></input>
+        <input value={inputTextValue} onChange={(e)=>{setInputtextValue(p=>e.target.value)}}></input>
       </div>
 
       <div className="miniBox">

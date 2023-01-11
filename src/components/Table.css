@@ -1,0 +1,12 @@
+tbody button{
+    background-color: red;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+
+}
+tbody button:hover{
+    background-color: rgb(212, 61, 61);
+
+
+}
